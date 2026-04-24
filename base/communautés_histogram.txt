@@ -1,0 +1,499 @@
+=======================================================
+   RAPPORT DES 10 PLUS GRANDES COMMUNAUTÉS
+   (Graphe orienté avec seuil ≥ 6 publications)
+=======================================================
+
+---[COMMUNAUTÉ 1]---
+Taille: 133
+Diamètre: 30
+Auteurs:
+  - Alexander G. Hauptmann
+  - Biao Hou
+  - Bin Yu 0011
+  - Bin Zhao 0001
+  - Chang Xu 0002
+  - Chaoyue Wang
+  - Chen Zhang 0015
+  - Chris H. Q. Ding
+  - Dacheng Tao
+  - David Zhang 0001
+  - Dingwen Zhang
+  - Dongruo Zhou
+  - Fang Liu 0001
+  - Fang Liu 0034
+  - Fei Wang 0001
+  - Fei Wu 0001
+  - Feiping Nie 0001
+  - Feng Xie 0002
+  - Gong Cheng 0003
+  - Guanchun Wang
+  - Guangyi Chen 0002
+  - Guo-Jun Qi
+  - Hao Li 0009
+  - Hao Zhu 0009
+  - Heliang Zheng
+  - Heng Huang
+  - Hongyuan Zhang 0001
+  - Hua Wang 0007
+  - Huiyu Zhou 0001
+  - Ira Cohen
+  - Jia Liu 0020
+  - Jiafan He
+  - Jiale Cao
+  - Jianqiang Li 0001
+  - Jie Chen 0027
+  - Jie Feng 0003
+  - Jie Qiao
+  - Jie Yu 0001
+  - Jie Zhou 0001
+  - Jin Xie 0005
+  - Jing Liu 0001
+  - Jing Zhao
+  - Jingjing Ma 0001
+  - Jinhui Tang 0001
+  - Jiwen Lu
+  - Jun Yang 0003
+  - Junlin Hu 0001
+  - Junwei Han 0001
+  - Junyu Gao 0001
+  - Kun Kuang
+  - Lei Zhang 0006
+  - Liang Lin
+  - Libo Huang
+  - Licheng Jiao
+  - Lijia Ma
+  - Linchao Zhu
+  - Ling Shao 0001
+  - Lingling Li 0002
+  - Lixia Yang
+  - Luo Si
+  - Maoguo Gong
+  - Meng Wang 0001
+  - Michael S. Lew
+  - Min Wang 0007
+  - Mulin Chen
+  - Nicu Sebe
+  - Pan Xu 0002
+  - Peng Cui 0001
+  - Qi Tian 0001
+  - Qi Wang 0009
+  - Qiang Li 0042
+  - Qing Cai
+  - Qiuzhen Lin
+  - Quanquan Gu
+  - Richang Hong
+  - Rong Jin 0001
+  - Rong Wang 0001
+  - Rong Yan
+  - Ronghua Shang
+  - Rui Zhang 0017
+  - Ruichu Cai
+  - Sheng Ma
+  - Shiming Xiang
+  - Shuang Wang 0001
+  - Shuyuan Yang 0001
+  - Tao Li 0001
+  - Venice Erin Liong
+  - Wangmeng Zuo
+  - Wei Chen 0103
+  - Wei-Hao Lin 0003
+  - Weilin Chen 0001
+  - Weitong Zhang
+  - Wen Wen
+  - Wenhua Zhang
+  - Wenping Ma 0001
+  - Xianghai Cao
+  - Xiangjun Zhang
+  - Xiangrong Zhang
+  - Xiangtao Zheng
+  - Xiaodan Liang
+  - Xiaohan Wang
+  - Xiaolin Wu 0001
+  - Xiaolong Fan
+  - Xiaoqian Wang 0001
+  - Xiaoqiang Lu
+  - Xingxing Xie
+  - Xintao Hu
+  - Xiwen Yao
+  - Xu Liu 0006
+  - Xu Tang 0004
+  - Xuelong Li 0001
+  - Yan Zeng 0002
+  - Yangyang Li 0001
+  - Yanqiao Chen
+  - Yanwei Pang
+  - Yi Yang 0001
+  - Yongsheng Dong
+  - Yongzhe Yuan
+  - Yu Xie 0009
+  - Yuan Yuan 0001
+  - Yue Wu 0004
+  - Yueting Zhuang
+  - Yunchao Wei
+  - Zechao Li
+  - Zedong Tang
+  - Zhanxuan Hu
+  - Zheng Wang 0037
+  - Zheng-Jun Zha
+  - Zhengming Chen 0002
+  - Zhifeng Hao
+  - Zhitong Xiong
+  - Zhixi Feng
+  - Zijian Li 0001
+
+---[COMMUNAUTÉ 2]---
+Taille: 73
+Diamètre: 35
+Auteurs:
+  - Ali Rahmati
+  - Bin Sheng 0003
+  - Caihong Kai
+  - Caijun Zhong
+  - Chao Qiu
+  - Chao Wang 0093
+  - Cheng-Xiang Wang 0001
+  - Chenhao Qi 0001
+  - Chenyang Wang 0001
+  - Chongjun Ouyang
+  - Chuan Zhang 0001
+  - Dongming Wang 0002
+  - Fawaz S. Al-Qahtani
+  - Feng Li 0008
+  - Fuhui Zhou
+  - Gangcan Sun
+  - Geoffrey Ye Li
+  - Guoxing Huang
+  - Haipeng Yao
+  - Han Zou
+  - Hao Xu 0020
+  - Haozhi Cao
+  - Hongjian Sun 0001
+  - Huazi Zhang
+  - Jiamin Li 0001
+  - Jianfei Yang
+  - Jiaqi Xu
+  - Jing Jiang 0004
+  - Jingyu Hua
+  - Kai Wang 0036
+  - Kefeng Guo
+  - Lan Tang
+  - Li Ping Qian 0001
+  - Li Wang 0041
+  - Liang Huang 0006
+  - Min Wu 0008
+  - Ming Zeng 0002
+  - Minghui Liwang
+  - Nan Zhao 0001
+  - Nian Liu 0002
+  - Ning Chen 0011
+  - Peiying Zhang 0001
+  - Pengcheng Zhu 0001
+  - Redha M. Radaydeh
+  - Richeng Jin
+  - Seyyedali Hosseinalipour
+  - Shiwen He
+  - Wangbo Zhao
+  - Wanming Hao
+  - Wei Huang 0010
+  - Weidang Lu
+  - Xiao Liu 0018
+  - Xiaofan He
+  - Xiaofei Wang 0001
+  - Xiaohu You 0001
+  - Xidong Mu
+  - Xin Liu 0009
+  - Xingwang Li 0001
+  - Xiuhua Li
+  - Yongming Huang 0001
+  - Yu Zhang 0015
+  - Yuan Wu 0001
+  - Yuanwei Liu
+  - Yuecong Xu
+  - Yuzhen Huang 0001
+  - Zhaolin Wang 0001
+  - Zhaoyang Zhang 0001
+  - Zheng Chu 0001
+  - Zhenghua Chen
+  - Zhengyu Zhu 0001
+  - Zhenyu Na
+  - Zhijin Qin
+  - Zhipeng Cheng
+
+---[COMMUNAUTÉ 3]---
+Taille: 38
+Diamètre: 13
+Auteurs:
+  - Aabhas V. Paliwal
+  - Andrea Tagarelli
+  - Anna Cinzia Squicciarini
+  - Bhavani Thuraisingham
+  - Christopher Griffin 0001
+  - Dan Lin 0001
+  - Danilo Montesi
+  - Dinesh C. Verma
+  - Elisa Bertino
+  - Federica Paci
+  - Francesco Ricca
+  - Georg Gottlob
+  - Gianluigi Greco
+  - Giansalvatore Mecca
+  - Giorgio Terracina
+  - Kevin W. Hamlen
+  - Luca Cabibbo
+  - Luigi Bellomarini
+  - Luigi Palopoli 0001
+  - Magdalena Ortiz 0001
+  - Marco Manna
+  - Matthias Lanzinger
+  - Nabil R. Adam
+  - Nicola Leone
+  - Paolo Atzeni
+  - Paolo Cappellari
+  - Paolo Papotti
+  - Riccardo Torlone
+  - Roberto Interdonato
+  - Seraphin B. Calo
+  - Sergio Greco
+  - Simona Perri
+  - Smitha Sundareswaran
+  - Soon Ae Chun
+  - Thomas Eiter
+  - Vandana Pursnani Janeja
+  - Vijayalakshmi Atluri
+  - Wolfgang Faber 0001
+
+---[COMMUNAUTÉ 4]---
+Taille: 34
+Diamètre: 7
+Auteurs:
+  - Admir Barolli
+  - Akio Koyama
+  - Arjan Durresi
+  - David Gan
+  - Donald Elmazi
+  - Elis Kulla
+  - Ermioni Qafzezi
+  - Evjola Spaho
+  - Fatos Xhafa
+  - Fumio Arakawa
+  - Giuseppe De Marco
+  - Joanna Kolodziej
+  - Jordi Conesa
+  - Keita Matsuo
+  - Kevin Bylykbashi
+  - Kosuke Ozera
+  - Leonard Barolli
+  - Makoto Ikeda
+  - Masahiro Hiyama
+  - Mimoza Durresi
+  - Miralda Cuka
+  - Phudit Ampririt
+  - Ryoichiro Obukata
+  - Santi Caball
+  - Seiji Ohara
+  - Shinji Sakamoto
+  - Shunya Higashi
+  - Taiki Honda
+  - Takaaki Inaba
+  - Tetsuya Oda
+  - Thanasis Daradoumis
+  - Vamsi Paruchuri
+  - Vladi Kolici
+  - Yi Liu 0011
+
+---[COMMUNAUTÉ 5]---
+Taille: 33
+Diamètre: 6
+Auteurs:
+  - Andrea Pazienza
+  - Anna Ciampi
+  - Annalina Caputo
+  - Annalisa Appice
+  - Antonio Vergari
+  - Berardina De Carolis
+  - Cataldo Musto
+  - Claudia d'Amato
+  - Corrado Loglisci
+  - Davide Di Pierro
+  - Domenico Redavid
+  - Donato Malerba
+  - Eleonora Bernasconi
+  - Fabio Fumarola
+  - Fedelucio Narducci
+  - Fiorella de Rosis
+  - Floriana Esposito
+  - Francesca A. Lisi
+  - Giovanni Semeraro
+  - Lucia Siciliani
+  - Marco Degemmis
+  - Marco Polignano
+  - Marco de Gemmis
+  - Marenglen Biba
+  - Michelangelo Ceci
+  - Nicola Di Mauro
+  - Nicola Fanizzi
+  - Pasquale Lops
+  - Pierluigi Cassotti
+  - Pierpaolo Basile
+  - Roberto Corizzo
+  - Stefano Ferilli
+  - Teresa Maria Altomare Basile
+
+---[COMMUNAUTÉ 6]---
+Taille: 30
+Diamètre: 17
+Auteurs:
+  - Fangguo Zhang
+  - Feng Xia 0001
+  - Guojiang Shen
+  - Haibo Tian
+  - Haifeng Liu
+  - Honglong Chen
+  - Jian Weng 0001
+  - Jin Li 0002
+  - Jinbo Xiong
+  - Jingwei Li 0001
+  - Kui Ren 0001
+  - Minghui Li
+  - Mingliang Hou
+  - Qi Li 0011
+  - Qian Liu
+  - Qian Wang 0002
+  - Shengli Liu 0001
+  - Shengshan Hu
+  - Shuo Yu 0001
+  - Wei Wan
+  - Wei Wang 0077
+  - Xiangjie Kong 0001
+  - Xiaofeng Chen 0001
+  - Xiaoyi Pang
+  - Ximeng Liu
+  - Yang Yang 0026
+  - Yechao Zhang
+  - Zheli Liu
+  - Zhibo Wang 0001
+  - Zhiguo Gong
+
+---[COMMUNAUTÉ 7]---
+Taille: 27
+Diamètre: 10
+Auteurs:
+  - Asma Belhadi
+  - Chien-Ming Chen 0001
+  - Chun-Hao Chen
+  - Chun-Wei Lin 0001
+  - Gautam Srivastava 0001
+  - Guo-Cheng Lan
+  - Hung-Min Sun
+  - Ja-Hwung Su
+  - Jerry Chun-Wei Lin
+  - Jiahui Chen 0002
+  - Jimmy Ming-Tai Wu
+  - Jui-Di Wu
+  - Ming-Cheng Tseng
+  - Philippe Fournier-Viger
+  - Shicheng Wan
+  - Shyue-Liang Wang
+  - Tsu-Yang Wu
+  - Tung-Tso Tsai
+  - Tzung-Pei Hong
+  - Usef Faghihi
+  - Vincent S. Tseng
+  - Wen-Yang Lin
+  - Wensheng Gan
+  - Yeong-Chyi Lee
+  - Youcef Djenouri
+  - Yu-Chuan Tsai
+  - Yuh-Min Tseng
+
+---[COMMUNAUTÉ 8]---
+Taille: 26
+Diamètre: 12
+Auteurs:
+  - Alessio Zappone
+  - Antonio A. D'Amico
+  - Aris L. Moustakas
+  - Athanasios Stavridis 0001
+  - Carmen D'Andrea
+  - Cedomir Stefanovic
+  - Elisabeth de Carvalho
+  - Emanuele Grossi
+  - Emil Bjrnson
+  - George C. Alexandropoulos
+  - Henk Wymeersch
+  - Jimmy Jessen Nielsen
+  - Kasper F. Trillingsgaard
+  - Konstantinos D. Katsanos
+  - Luca Sanguinetti
+  - Luca Venturino
+  - Marco Di Renzo
+  - Marios Kountouris
+  - Michele Morelli
+  - Musa Furkan Keskin
+  - Nikolaos Pappas 0001
+  - Nuno K. Pratas
+  - Petar Popovski
+  - Stefano Buzzi
+  - Wei Lu 0012
+  - Zheng Chen 0002
+
+---[COMMUNAUTÉ 9]---
+Taille: 23
+Diamètre: 6
+Auteurs:
+  - Alexander Kathan
+  - Alice Baird
+  - Andreas Triantafyllopoulos
+  - Anton Batliner
+  - Bjrn W. Schuller
+  - Dejan Arsic
+  - Felix Burkhardt
+  - Felix Weninger
+  - Florian Eyben
+  - Jing Han 0010
+  - Jun Deng
+  - Kun Qian 0003
+  - Lukas Christ
+  - Martin Wllmer
+  - Maurice Gerczuk
+  - Nicholas Cummins
+  - Panagiotis Tzirakis
+  - Shahin Amiriparian
+  - Shuo Liu 0012
+  - Xinzhou Xu
+  - Yue Zhang 0014
+  - Zhao Ren
+  - Zixing Zhang 0001
+
+---[COMMUNAUTÉ 10]---
+Taille: 21
+Diamètre: 7
+Auteurs:
+  - Alessandro Ricci
+  - Andrea Omicini
+  - Andrea Santi
+  - Angelo Croatti
+  - Danilo Pianini
+  - Enrico Denti
+  - Ferruccio Damiani
+  - Franco Zambonelli
+  - Gianluca Aguzzi
+  - Giorgio Audrito
+  - Jacob Beal
+  - Jomi Fred Hbner
+  - Marco Mamei
+  - Matteo Casadei
+  - Michael Lienhardt
+  - Michele Piunti
+  - Mirko Viroli
+  - Olivier Boissier
+  - Rafael H. Bordini
+  - Roberto Casadei
+  - Sara Montagna
+
+=======================================================
+   RÉSUMÉ
+=======================================================
+Nombre de communautés (top 10 affichées): 10
+Nombre total d'auteurs dans ces 10 communautés: 438
+Diamètre maximal: 35

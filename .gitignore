@@ -1,0 +1,6 @@
+# Ignore DBLP raw data files
+**/dblp*.xml*
+**/dblp.dtd
+
+# Ignore generated output directories
+**/out/
