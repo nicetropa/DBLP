@@ -92,6 +92,26 @@ public class DblpParsingDemo {
         }
 
         /**
+         * Retourne le nombre total de composantes fortement connexes.
+         */
+        int countStronglyConnectedComponents() {
+            Map<String, Integer> index = new HashMap<>();
+            Map<String, Integer> lowlink = new HashMap<>();
+            Deque<String> stack = new ArrayDeque<>();
+            Set<String> onStack = new HashSet<>();
+            List<Set<String>> components = new ArrayList<>();
+            int[] currentIndex = {0};
+
+            for (String node : filteredGraph.keySet()) {
+                if (!index.containsKey(node)) {
+                    strongConnect(node, index, lowlink, stack, onStack, components, currentIndex);
+                }
+            }
+
+            return components.size();
+        }
+
+        /**
          * Algorithme de Tarjan pour trouver les composantes fortement connexes.
          */
         private void strongConnect(
@@ -278,16 +298,33 @@ public class DblpParsingDemo {
                     .limit(10)
                     .toList();
         }
+
+        /**
+         * Retourne un histogramme des tailles de communautés.
+         */
+        Map<Integer, Integer> getSizeHistogram() {
+            Map<String, Integer> communitySize = new HashMap<>();
+            for (String author : parent.keySet()) {
+                String root = find(author);
+                communitySize.put(root, size.get(root));
+            }
+
+            Map<Integer, Integer> histogram = new TreeMap<>();
+            for (Integer community : communitySize.values()) {
+                histogram.put(community, histogram.getOrDefault(community, 0) + 1);
+            }
+            return histogram;
+        }
     }
 
     public static void main(String[] args) throws Exception {
         if (args.length < 2) {
             System.err.println("""
                 Usage:
-                  java -Xmx2g DblpParsingDemo <dblp.xml|dblp.xml.gz> <dblp.dtd> [--limit=1000000]
+                  java -Xmx2g DblpParsingDemo <dblp.xml|dblp.xml.gz> <dblp.dtd> --task=1|2 [--limit=1000000]
 
                 Exemple:
-                  java -Xmx2g DblpParsingDemo dblp.xml.gz dblp.dtd --limit=500000
+                  java -Xmx2g DblpParsingDemo dblp.xml.gz dblp.dtd --task=2 --limit=500000
                 """);
             System.exit(2);
         }
@@ -295,10 +332,33 @@ public class DblpParsingDemo {
         Path xmlPath = Paths.get(args[0]);
         Path dtdPath = Paths.get(args[1]);
 
+        String task = "2";
         long limit = Long.MAX_VALUE; // optionnel: s'arrêter après N publications
         for (int i = 2; i < args.length; i++) {
             String a = args[i];
-            if (a.startsWith("--limit=")) limit = Long.parseLong(a.substring("--limit=".length()));
+            if (a.equals("--limit")) {
+                if (i + 1 >= args.length) {
+                    throw new IllegalArgumentException("Argument --limit nécessite une valeur");
+                }
+                limit = Long.parseLong(args[++i]);
+            } else if (a.startsWith("--limit=")) {
+                limit = Long.parseLong(a.substring("--limit=".length()));
+            } else if (a.equals("--task")) {
+                if (i + 1 >= args.length) {
+                    throw new IllegalArgumentException("Argument --task nécessite une valeur");
+                }
+                task = args[++i];
+                if (!task.equals("1") && !task.equals("2")) {
+                    throw new IllegalArgumentException("Argument --task doit être 1 ou 2");
+                }
+            } else if (a.startsWith("--task=")) {
+                task = a.substring("--task=".length());
+                if (!task.equals("1") && !task.equals("2")) {
+                    throw new IllegalArgumentException("Argument --task doit être 1 ou 2");
+                }
+            } else {
+                throw new IllegalArgumentException("Argument inconnu: " + a);
+            }
         }
 
         if (!Files.exists(xmlPath)) throw new FileNotFoundException("XML introuvable: " + xmlPath);
@@ -312,57 +372,14 @@ public class DblpParsingDemo {
 
         System.out.println("XML: " + xmlPath);
         System.out.println("DTD: " + dtdPath);
+        System.out.println("Task: " + task);
         if (limit != Long.MAX_VALUE) System.out.println("Limit: " + limit);
-        System.out.println("=== Graphe orienté avec seuil >= 6 ===\n");
 
-        long pubCount = 0;
-        long reportEvery = 100_000;
-        OrientedGraph graph = new OrientedGraph();
-
-        // Parsing en ligne: compter les paires (A → B)
-        try (DblpPublicationGenerator gen = new DblpPublicationGenerator(xmlPath, dtdPath, 256)) {
-            while (pubCount < limit) {
-                Optional<DblpPublicationGenerator.Publication> opt = gen.nextPublication();
-                if (opt.isEmpty()) break;
-
-                pubCount++;
-                DblpPublicationGenerator.Publication p = opt.get();
-
-                List<String> authors = p.authors;
-                if (authors == null || authors.size() < 2) {
-                    continue;
-                }
-
-                // Tâche 2: Pour chaque publication avec ≥2 auteurs:
-                // - A = premier auteur
-                // - Pour chaque autre auteur B: incrémenter compteur pour (A → B)
-                String firstAuthor = authors.get(0);
-                for (int i = 1; i < authors.size(); i++) {
-                    graph.incrementEdge(firstAuthor, authors.get(i));
-                }
-
-                // Affichage intermédiaire
-                if (pubCount % reportEvery == 0) {
-                    System.out.printf(Locale.US, "Publication #%,d traitée%n", pubCount);
-                }
-            }
+        if (task.equals("1")) {
+            runTask1(xmlPath, dtdPath, limit);
+        } else {
+            runTask2(xmlPath, dtdPath, limit);
         }
-
-        System.out.println("\n=== Fin du parsing ===");
-        System.out.printf(Locale.US, "Total publications traitées: %,d%n", pubCount);
-
-        // Construire le graphe filtré (seuil ≥ 6)
-        System.out.println("\nConstruction du graphe filtré (seuil >= 6)...");
-        graph.buildFilteredGraph(6);
-
-        // Trouver les composantes fortement connexes
-        System.out.println("Détection des composantes fortement connexes...");
-        List<Set<String>> top10Communities = graph.findTop10StronglyConnectedComponents();
-
-        System.out.printf("Nombre de communautés trouvées: %d (affichage top 10)%n", top10Communities.size());
-
-        // Calculer les statistiques et générer le rapport
-        generateCommunityReport(graph, top10Communities, xmlPath);
     }
 
     /**
@@ -370,8 +387,8 @@ public class DblpParsingDemo {
      * Cherche automatiquement python3 ou python selon le système.
      */
     static void runPythonHistogram(Path csvPath, Path pngPath) throws IOException, InterruptedException {
-        // Trouver le script Python dans le même répertoire que le CSV
-        Path scriptPath = csvPath.getParent().resolve("generate_histogram.py");
+        // Le script Python se trouve dans le répertoire parent du dossier de sortie data_out
+        Path scriptPath = csvPath.toAbsolutePath().getParent().getParent().resolve("generate_histogram.py").normalize();
 
         if (!Files.exists(scriptPath)) {
             throw new IOException("Script Python introuvable: " + scriptPath);
@@ -383,7 +400,7 @@ public class DblpParsingDemo {
             throw new IOException("Aucune commande Python trouvée (python3 / python)");
         }
 
-        ProcessBuilder pb = new ProcessBuilder(pythonCmd, scriptPath.toString(), csvPath.toString());
+        ProcessBuilder pb = new ProcessBuilder(pythonCmd, scriptPath.toString(), csvPath.toString(), pngPath.toString());
         pb.redirectErrorStream(true); // merge stdout + stderr
         pb.directory(csvPath.getParent().toFile());
 
@@ -410,6 +427,156 @@ public class DblpParsingDemo {
         }
 
         System.out.printf("[OK] Histogramme PNG généré: %s%n", pngPath);
+    }
+
+    static void runTask1(Path xmlPath, Path dtdPath, long limit) throws Exception {
+        System.out.println("=== Tâche 1 : communautés de co-publication (graphe non orienté) ===\n");
+        long pubCount = 0;
+        long reportEvery = 100_000;
+        UnionFind uf = new UnionFind();
+
+        try (DblpPublicationGenerator gen = new DblpPublicationGenerator(xmlPath, dtdPath, 256)) {
+            while (pubCount < limit) {
+                Optional<DblpPublicationGenerator.Publication> opt = gen.nextPublication();
+                if (opt.isEmpty()) break;
+
+                pubCount++;
+                DblpPublicationGenerator.Publication p = opt.get();
+                List<String> authors = p.authors;
+                if (authors == null || authors.isEmpty()) {
+                    continue;
+                }
+
+                Set<String> uniqueAuthors = new LinkedHashSet<>(authors);
+                if (uniqueAuthors.size() == 1) {
+                    uf.find(uniqueAuthors.iterator().next());
+                } else {
+                    Iterator<String> it = uniqueAuthors.iterator();
+                    String first = it.next();
+                    uf.find(first);
+                    while (it.hasNext()) {
+                        uf.union(first, it.next());
+                    }
+                }
+
+                if (pubCount % reportEvery == 0) {
+                    System.out.printf(Locale.US, "Publication #%,d traitée%n", pubCount);
+                    List<Integer> top10 = uf.getTop10Sizes();
+                    System.out.printf("  Communautés: %,d, Top 10 tailles: %s%n",
+                            uf.getNumCommunities(), top10);
+                }
+            }
+        }
+
+        System.out.println("\n=== Fin du parsing ===");
+        System.out.printf(Locale.US, "Total publications traitées: %,d%n", pubCount);
+        System.out.printf(Locale.US, "Nombre de communautés: %,d%n", uf.getNumCommunities());
+        System.out.printf(Locale.US, "Top 10 tailles: %s%n", uf.getTop10Sizes());
+        generateTask1Report(uf, xmlPath);
+    }
+
+    static Path getOutputDir(Path xmlPath) throws IOException {
+        Path absoluteXmlPath = xmlPath.toAbsolutePath();
+        Path outputDir = absoluteXmlPath.getParent();
+        if (outputDir == null) {
+            outputDir = Paths.get(".").toAbsolutePath();
+        }
+        Path dataOut = outputDir.resolve("data_out");
+        if (!Files.exists(dataOut)) {
+            Files.createDirectories(dataOut);
+        }
+        return dataOut;
+    }
+
+    static void runTask2(Path xmlPath, Path dtdPath, long limit) throws Exception {
+        System.out.println("=== Tâche 2 : graphe orienté avec seuil >= 6 ===\n");
+        long pubCount = 0;
+        long reportEvery = 100_000;
+        OrientedGraph graph = new OrientedGraph();
+
+        try (DblpPublicationGenerator gen = new DblpPublicationGenerator(xmlPath, dtdPath, 256)) {
+            while (pubCount < limit) {
+                Optional<DblpPublicationGenerator.Publication> opt = gen.nextPublication();
+                if (opt.isEmpty()) break;
+
+                pubCount++;
+                DblpPublicationGenerator.Publication p = opt.get();
+
+                List<String> authors = p.authors;
+                if (authors == null || authors.size() < 2) {
+                    continue;
+                }
+
+                String firstAuthor = authors.get(0);
+                for (int i = 1; i < authors.size(); i++) {
+                    graph.incrementEdge(firstAuthor, authors.get(i));
+                }
+
+                if (pubCount % reportEvery == 0) {
+                    System.out.printf(Locale.US, "Publication #%,d traitée%n", pubCount);
+                }
+            }
+        }
+
+        System.out.println("\n=== Fin du parsing ===");
+        System.out.printf(Locale.US, "Total publications traitées: %,d%n", pubCount);
+
+        System.out.println("\nConstruction du graphe filtré (seuil >= 6)...");
+        graph.buildFilteredGraph(6);
+
+        System.out.println("Détection des composantes fortement connexes...");
+        List<Set<String>> top10Communities = graph.findTop10StronglyConnectedComponents();
+        int totalCommunities = graph.countStronglyConnectedComponents();
+
+        System.out.printf("Nombre total de CFC: %d %n", totalCommunities);
+        generateCommunityReport(graph, top10Communities, xmlPath);
+    }
+
+    static void generateTask1Report(UnionFind uf, Path xmlPath) throws IOException {
+        Path outputDir = getOutputDir(xmlPath);
+
+        Map<Integer, Integer> sizeHistogram = uf.getSizeHistogram();
+        Path csvPath = outputDir.resolve("communautes_tache1_data.csv");
+        Path txtPath = outputDir.resolve("communautes_tache1_histogram.txt");
+
+        if (Files.exists(csvPath)) {
+            Files.delete(csvPath);
+            System.out.println("[INFO] Suppression: " + csvPath);
+        }
+        if (Files.exists(txtPath)) {
+            Files.delete(txtPath);
+            System.out.println("[INFO] Suppression: " + txtPath);
+        }
+
+        try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(csvPath))) {
+            writer.println("Taille de communauté,Fréquence");
+            for (Map.Entry<Integer, Integer> entry : sizeHistogram.entrySet()) {
+                writer.printf("%d,%d%n", entry.getKey(), entry.getValue());
+            }
+        }
+        System.out.printf("[OK] CSV généré: %s%n", csvPath);
+
+        try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(txtPath))) {
+            writer.println("=======================================================");
+            writer.println("   HISTOGRAMME DES TAILLES DE COMMUNAUTÉS (Tâche 1)");
+            writer.println("=======================================================");
+            writer.println();
+            writer.println("Taille de communauté, Fréquence");
+            for (Map.Entry<Integer, Integer> entry : sizeHistogram.entrySet()) {
+                writer.printf("%d -> %d%n", entry.getKey(), entry.getValue());
+            }
+            writer.println();
+            writer.printf("Nombre total de communautés : %,d%n", uf.getNumCommunities());
+            writer.printf("Top 10 tailles : %s%n", uf.getTop10Sizes());
+        }
+        System.out.printf("[OK] Rapport généré: %s%n", txtPath);
+
+        Path pngPath = outputDir.resolve("communautes_tache1_histogram.png");
+        try {
+            runPythonHistogram(csvPath, pngPath);
+        } catch (Exception e) {
+            System.err.println("[ERREUR] Impossible de générer le PNG: " + e.getMessage());
+        }
     }
 
     /**
@@ -439,10 +606,7 @@ public class DblpParsingDemo {
      * - Détails (taille, diamètre, auteurs)
      */
     static void generateCommunityReport(OrientedGraph graph, List<Set<String>> top10Communities, Path xmlPath) throws Exception {
-        Path outputDir = xmlPath.getParent();
-        if (outputDir == null) {
-            outputDir = Paths.get(".");
-        }
+        Path outputDir = getOutputDir(xmlPath);
 
         // === Générer l'histogramme des tailles de communautés ===
         Map<Integer, Integer> sizeHistogram = new TreeMap<>();
@@ -451,8 +615,8 @@ public class DblpParsingDemo {
             sizeHistogram.put(size, sizeHistogram.getOrDefault(size, 0) + 1);
         }
 
-        Path csvPath = outputDir.resolve("communautés_data.csv");
-        Path txtPath = outputDir.resolve("communautés_histogram.txt");
+        Path csvPath = outputDir.resolve("communautes_tache2_data.csv");
+        Path txtPath = outputDir.resolve("communautes_tache2_histogram.txt");
 
         // Supprimer les fichiers existants
         if (Files.exists(csvPath)) {
@@ -516,7 +680,7 @@ public class DblpParsingDemo {
         System.out.printf("[OK] Rapport généré: %s%n", txtPath);
 
         // Générer le PNG de l'histogramme via le script Python
-        Path pngPath = outputDir.resolve("communautes_histogram.png");
+        Path pngPath = outputDir.resolve("communautes_tache2_histogram.png");
         try {
             runPythonHistogram(csvPath, pngPath);
         } catch (Exception e) {

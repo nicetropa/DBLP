@@ -97,11 +97,14 @@ def generate_histogram(csv_path, output_path):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print("Usage: python generate_histogram.py <chemin_csv>")
-        print("Exemple: python generate_histogram.py communautes_data.csv")
+        print("Usage: python generate_histogram.py <chemin_csv> [<chemin_png>]")
+        print("Exemple: python generate_histogram.py communautes_data.csv communautes_histogram.png")
         sys.exit(1)
 
     csv_path = Path(sys.argv[1])
-    output_path = csv_path.parent / 'communautes_histogram.png'
+    if len(sys.argv) >= 3:
+        output_path = Path(sys.argv[2])
+    else:
+        output_path = csv_path.parent / 'communautes_histogram.png'
 
     generate_histogram(str(csv_path), str(output_path))
