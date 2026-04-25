@@ -52,28 +52,20 @@ public class DblpParsingDemo {
          */
         void buildFilteredGraph(int threshold) {
             filteredGraph.clear();
-            for (String author : allAuthors) {
-                filteredGraph.putIfAbsent(author, new HashSet<>());
-            }
 
             for (Map.Entry<String, Map<String, Integer>> entry : edgeCounters.entrySet()) {
                 String from = entry.getKey();
-                Map<String, Integer> outgoing = entry.getValue();
-                Set<String> neighbors = filteredGraph.computeIfAbsent(from, k -> new HashSet<>());
-
-                for (Map.Entry<String, Integer> edge : outgoing.entrySet()) {
+                for (Map.Entry<String, Integer> edge : entry.getValue().entrySet()) {
                     if (edge.getValue() >= threshold) {
-                        neighbors.add(edge.getKey());
+                        // Ajouter "from" et "to" seulement s'ils participent au graphe filtré
+                        filteredGraph.computeIfAbsent(from, k -> new HashSet<>()).add(edge.getKey());
+                        filteredGraph.computeIfAbsent(edge.getKey(), k -> new HashSet<>());
                     }
                 }
             }
         }
 
-        /**
-         * Retourne la liste ordonnée des 10 plus grandes composantes fortement connexes.
-         * Chaque composante est un Set<String> d'auteurs.
-         */
-        List<Set<String>> findTop10StronglyConnectedComponents() {
+        List<Set<String>> findAllStronglyConnectedComponents() {
             Map<String, Integer> index = new HashMap<>();
             Map<String, Integer> lowlink = new HashMap<>();
             Deque<String> stack = new ArrayDeque<>();
@@ -88,27 +80,7 @@ public class DblpParsingDemo {
             }
 
             components.sort((a, b) -> Integer.compare(b.size(), a.size()));
-            return components.stream().limit(10).collect(Collectors.toList());
-        }
-
-        /**
-         * Retourne le nombre total de composantes fortement connexes.
-         */
-        int countStronglyConnectedComponents() {
-            Map<String, Integer> index = new HashMap<>();
-            Map<String, Integer> lowlink = new HashMap<>();
-            Deque<String> stack = new ArrayDeque<>();
-            Set<String> onStack = new HashSet<>();
-            List<Set<String>> components = new ArrayList<>();
-            int[] currentIndex = {0};
-
-            for (String node : filteredGraph.keySet()) {
-                if (!index.containsKey(node)) {
-                    strongConnect(node, index, lowlink, stack, onStack, components, currentIndex);
-                }
-            }
-
-            return components.size();
+            return components;
         }
 
         /**
@@ -525,10 +497,11 @@ public class DblpParsingDemo {
         graph.buildFilteredGraph(6);
 
         System.out.println("Détection des composantes fortement connexes...");
-        List<Set<String>> top10Communities = graph.findTop10StronglyConnectedComponents();
-        int totalCommunities = graph.countStronglyConnectedComponents();
+        List<Set<String>> allComponents = graph.findAllStronglyConnectedComponents();
+        int totalCommunities = allComponents.size();
+        List<Set<String>> top10Communities = allComponents.stream().limit(10).collect(Collectors.toList());
 
-        System.out.printf("Nombre total de CFC: %d %n", totalCommunities);
+        System.out.printf("Nombre total de CFC: %d%n", totalCommunities);
         generateCommunityReport(graph, top10Communities, xmlPath);
     }
 
@@ -594,7 +567,7 @@ public class DblpParsingDemo {
                     return cmd;
                 }
             } catch (IOException | InterruptedException ignored) {
-                // Commande non disponible, essayer la suivante
+
             }
         }
         return null;
