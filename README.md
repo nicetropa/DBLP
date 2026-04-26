@@ -30,20 +30,22 @@ Le script compile les fichiers Java dans `out/` puis lance `DblpParsingDemo`.
 
 ### Linux / macOS / Git Bash
 
-Crée un environement virtuel et installer matplotlib :
-  ```bash
-  python3 -m venv venv && ./venv/bin/pip install matplotlib
-  ```
-
 Ouvre un terminal dans `d:\Code\ALGO2_2\base` puis exécute :
+
+```bash
+python3 -m venv venv && ./venv/bin/pip install matplotlib
+```
+Pour créer un environement virtuel et installer la librairie matplotlib.
 
 ```bash
 chmod +x compile_and_run.sh
 ```
+Pour pouvoir executer le script bash.
 
 ```bash
 ./compile_and_run.sh
 ```
+Pour executer le script bash.
 
 Le script compile les fichiers Java dans `out/` puis lance `DblpParsingDemo`.
 
