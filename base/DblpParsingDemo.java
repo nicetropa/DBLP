@@ -371,12 +371,15 @@ public class DblpParsingDemo {
         if (pythonCmd == null) {
             throw new IOException("Aucune commande Python trouvée (python3 / python)");
         }
-
-        Path pythonPath = Path.of(pythonCmd);
-        if (!pythonPath.isAbsolute()) {
-            pythonPath = Path.of(System.getProperty("user.dir")).resolve(pythonPath).normalize();
+        
+        String resolvedPython = pythonCmd; 
+        if (!System.getProperty("os.name").toLowerCase().contains("win")) {
+            Path pythonPath = Path.of(pythonCmd);
+            if (!pythonPath.isAbsolute()) {
+                pythonPath = Path.of(System.getProperty("user.dir")).resolve(pythonPath).normalize();
+            }
+            resolvedPython = pythonPath.toString();
         }
-        String resolvedPython = pythonPath.toString();
 
         ProcessBuilder pb = new ProcessBuilder(resolvedPython, scriptPath.toString(), csvPath.toString(), pngPath.toString());
         pb.redirectErrorStream(true); // merge stdout + stderr
