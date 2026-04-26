@@ -372,7 +372,13 @@ public class DblpParsingDemo {
             throw new IOException("Aucune commande Python trouvée (python3 / python)");
         }
 
-        ProcessBuilder pb = new ProcessBuilder(pythonCmd, scriptPath.toString(), csvPath.toString(), pngPath.toString());
+        Path pythonPath = Path.of(pythonCmd);
+        if (!pythonPath.isAbsolute()) {
+            pythonPath = Path.of(System.getProperty("user.dir")).resolve(pythonPath).normalize();
+        }
+        String resolvedPython = pythonPath.toString();
+
+        ProcessBuilder pb = new ProcessBuilder(resolvedPython, scriptPath.toString(), csvPath.toString(), pngPath.toString());
         pb.redirectErrorStream(true); // merge stdout + stderr
         pb.directory(csvPath.getParent().toFile());
 
@@ -557,7 +563,7 @@ public class DblpParsingDemo {
      * Essaie python3 en premier, puis python.
      */
     private static String findPythonCommand() {
-        for (String cmd : new String[]{"python3", "python"}) {
+        for (String cmd : new String[]{"venv/bin/python3", "python3", "python"}) {
             try {
                 Process p = new ProcessBuilder(cmd, "--version")
                         .redirectErrorStream(true)

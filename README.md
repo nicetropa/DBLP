@@ -14,7 +14,7 @@ Lorsque aucun argument n’est fourni, le script utilise automatiquement :
 - `dblp-2026-01-01.xml.gz`
 - `dblp.dtd`
 
-!!! Ces fichiers doivent se trouver dans le même répertoire que le script. !!!!
+!!! Ces fichiers doivent se trouver dans le même répertoire que le script. !!!
 
 ## Lancer le projet
 
@@ -30,7 +30,16 @@ Le script compile les fichiers Java dans `out/` puis lance `DblpParsingDemo`.
 
 ### Linux / macOS / Git Bash
 
+Crée un environement virtuel et installer matplotlib :
+  ```bash
+  python3 -m venv venv && ./venv/bin/pip install matplotlib
+  ```
+
 Ouvre un terminal dans `d:\Code\ALGO2_2\base` puis exécute :
+
+```bash
+chmod +x compile_and_run.sh
+```
 
 ```bash
 ./compile_and_run.sh

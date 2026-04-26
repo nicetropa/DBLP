@@ -4,3 +4,6 @@
 
 # Ignore generated output directories
 **/out/
+
+# Ignore virtual environment directories
+**/base/venv/
