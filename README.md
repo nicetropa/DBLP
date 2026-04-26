@@ -23,8 +23,14 @@ Lorsque aucun argument n’est fourni, le script utilise automatiquement :
 Ouvre un terminal dans `d:\Code\ALGO2_2\base` puis exécute :
 
 ```bat
+pip install matplotlib
+```
+Pour installer la librairie matplotlib.
+
+```bat
 compile_and_run.bat
 ```
+Pour executer le script bat.
 
 Le script compile les fichiers Java dans `out/` puis lance `DblpParsingDemo`.
 
