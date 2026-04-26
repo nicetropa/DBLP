@@ -494,6 +494,6 @@ Auteurs:
 =======================================================
    RÉSUMÉ
 =======================================================
-Nombre de communautés (top 10 affichées): 10
+CFC: 260211
 Nombre total d'auteurs dans ces 10 communautés: 438
 Diamètre maximal: 35

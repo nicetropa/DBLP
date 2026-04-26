@@ -48,7 +48,7 @@ public class DblpParsingDemo {
         }
 
         /**
-         * Construit le graphe filtré avec les arêtes ayant un compteur ≥ `threshold`.
+         * Construit le graphe filtré avec les arêtes ayant un compteur >= `threshold`.
          */
         void buildFilteredGraph(int threshold) {
             filteredGraph.clear();
@@ -641,7 +641,7 @@ public class DblpParsingDemo {
             writer.println("=======================================================");
             writer.println("   RÉSUMÉ");
             writer.println("=======================================================");
-            writer.printf("Nombre de communautés (top 10 affichées): %d%n", top10Communities.size());
+            writer.printf("CFC: %d%n", graph.findAllStronglyConnectedComponents().size());
             int totalAuthors = top10Communities.stream().mapToInt(Set::size).sum();
             writer.printf("Nombre total d'auteurs dans ces 10 communautés: %d%n", totalAuthors);
             int maxDiameter = top10Communities.stream()

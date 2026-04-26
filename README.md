@@ -14,7 +14,7 @@ Lorsque aucun argument n’est fourni, le script utilise automatiquement :
 - `dblp-2026-01-01.xml.gz`
 - `dblp.dtd`
 
-Ces fichiers doivent se trouver dans le même répertoire que le script.
+!!! Ces fichiers doivent se trouver dans le même répertoire que le script. !!!!
 
 ## Lancer le projet
 
