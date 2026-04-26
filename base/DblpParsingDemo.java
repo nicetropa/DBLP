@@ -562,20 +562,38 @@ public class DblpParsingDemo {
      * Cherche la commande Python disponible sur le système.
      * Essaie python3 en premier, puis python.
      */
-    private static String findPythonCommand() {
-        for (String cmd : new String[]{"venv/bin/python3", "python3", "python"}) {
-            try {
-                Process p = new ProcessBuilder(cmd, "--version")
-                        .redirectErrorStream(true)
-                        .start();
-                int exit = p.waitFor();
-                if (exit == 0) {
-                    return cmd;
-                }
-            } catch (IOException | InterruptedException ignored) {
+    static String findPythonCommand() {
+        boolean isWindows = System.getProperty("os.name").toLowerCase().contains("win");
 
+        if (isWindows) {
+            // Sur Windows, on cherche directement dans le PATH système
+            for (String cmd : new String[]{"python", "python3"}) {
+                try {
+                    Process p = new ProcessBuilder(cmd, "--version")
+                            .redirectErrorStream(true)
+                            .start();
+                    if (p.waitFor() == 0) return cmd;
+                } catch (Exception ignored) {}
+            }
+        } else {
+            // Sur Linux/Mac, on préfère le venv local
+            String userDir = System.getProperty("user.dir");
+            for (String rel : new String[]{"venv/bin/python3", "venv/bin/python", ".venv/bin/python3"}) {
+                Path candidate = Path.of(userDir).resolve(rel).normalize();
+                if (Files.exists(candidate)) return candidate.toString();
+            }
+
+            // Fallback système si pas de venv
+            for (String cmd : new String[]{"python3", "python"}) {
+                try {
+                    Process p = new ProcessBuilder(cmd, "--version")
+                            .redirectErrorStream(true)
+                            .start();
+                    if (p.waitFor() == 0) return cmd;
+                } catch (Exception ignored) {}
             }
         }
+
         return null;
     }
 
